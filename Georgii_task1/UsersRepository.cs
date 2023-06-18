@@ -1,19 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using NLog;
 
 namespace Georgii_task1
 {
     public class UsersRepository : IRepository<User>
     {
-        private readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly NLog.Logger logger;
         private ApplicationContext db;
 
         /// <summary>
         /// Repository for users table
         /// </summary>
         /// <param name="context">ApplicationContext for users table</param>
-        public UsersRepository(ApplicationContext context)
+        public UsersRepository(ApplicationContext context, Logger logger)
         {
+            this.logger = logger;
             logger.Info("Creating UsersRepository");
             db = context;
         }
