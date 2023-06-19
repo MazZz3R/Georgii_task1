@@ -8,21 +8,22 @@ namespace Georgii_task1
     {
         public static void Main(string[] args)
         {
-            var logger = NLog.LogManager.GetCurrentClassLogger();
+            // logger
+            NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
             logger.Info("Program started");
 
+            // import settings
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
             builder.AddJsonFile("dbsettings.json");
-            var config = builder.Build();
+            IConfigurationRoot config = builder.Build();
 
             string connectionString = config.GetConnectionString("DefaultConnection")!;
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
-            var options = optionsBuilder.UseSqlite(connectionString).Options;
+            DbContextOptions<ApplicationContext> options = optionsBuilder.UseSqlite(connectionString).Options;
+
 
             var context = new ApplicationContext(options);
-
-
             var usersRepository = new UsersRepository(context, logger);
 
             usersRepository.Create(new User { Name = "Ben", Email = "ben2@email.ru", Age = 52, Password = "I KNOW IT SHOULD BE HASHED"});
