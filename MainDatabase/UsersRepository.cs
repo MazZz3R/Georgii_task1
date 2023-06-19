@@ -12,6 +12,7 @@ namespace MainDatabase
         /// Repository for users table
         /// </summary>
         /// <param name="context">ApplicationContext for users table</param>
+        /// <param name="logger">Logger</param>
         public UsersRepository(ApplicationContext context, Logger logger)
         {
             this.logger = logger;
