@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NLog;
-
-namespace Georgii_task1
+    
+namespace MainDatabase
 {
     public class UsersRepository : IRepository<User>
     {
@@ -30,7 +30,7 @@ namespace Georgii_task1
                             select user).ToList();
             return users;
         }
-        
+
         /// <summary>
         /// Returns user with specified id
         /// </summary>

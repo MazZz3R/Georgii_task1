@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MainDatabase\MainDatabase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="dbsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

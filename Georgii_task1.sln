@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georgii_task1", "Georgii_task1\Georgii_task1.csproj", "{1C4A904E-7A0B-479F-B1B8-40B68BB838B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Georgii_task1", "Georgii_task1\Georgii_task1.csproj", "{1C4A904E-7A0B-479F-B1B8-40B68BB838B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainDatabase", "MainDatabase\MainDatabase.csproj", "{A0C7A8DD-C6E4-4053-81E8-A438582503F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1C4A904E-7A0B-479F-B1B8-40B68BB838B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C4A904E-7A0B-479F-B1B8-40B68BB838B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C4A904E-7A0B-479F-B1B8-40B68BB838B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0C7A8DD-C6E4-4053-81E8-A438582503F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0C7A8DD-C6E4-4053-81E8-A438582503F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0C7A8DD-C6E4-4053-81E8-A438582503F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0C7A8DD-C6E4-4053-81E8-A438582503F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
