@@ -27,8 +27,9 @@ namespace MainDatabase
         public IEnumerable<User> GetList()
         {
             _logger.LogInformation("Getting all users");
-            var users = (from user in db.Users.Include(p => p.followers).Include(p => p.following)
-                            select user).ToList();
+
+            var users = db.Users.Include(p => p.followers).Include(p => p.following);
+            
             return users;
         }
 
@@ -46,10 +47,7 @@ namespace MainDatabase
 
             try
             {
-                var user_db = (from user in db.Users.Include(p => p.followers).Include(p => p.following)
-                               where user.Id == id
-                               select user).First();
-                return user_db;
+                return db.Users.Include(p => p.followers).Include(p => p.following).First(p => p.Id == id);
             }
             catch (System.InvalidOperationException)
             {
@@ -103,9 +101,7 @@ namespace MainDatabase
             _logger.LogInformation($"Deleting user with id {id}");
             try
             {
-                var user_db = (from user in db.Users.Include(p => p.followers).Include(p => p.following)
-                               where user.Id == id
-                               select user).First();
+                var user_db = db.Users.First(p => p.Id == id);
                 db.Users.Remove(user_db);
             }
             catch (System.InvalidOperationException)
