@@ -170,5 +170,20 @@ namespace MainDatabase
             _logger.LogInformation($"User {user.Name} is now followed by {follower.Name}");
             user.followers.Add(follower);
         }
+
+        /// <summary>
+        /// Removes follower from user
+        /// </summary>
+        /// <param name="user">
+        /// User from remove follower to
+        /// </param>
+        /// <param name="follower">
+        /// Follower to remove from user
+        /// </param>
+        public void Unfollow(User user, User follower)
+        {
+            _logger.LogInformation($"User {user.Name} have unfollowed {follower.Name}");
+            user.followers.Remove(follower);
+        }
     }
 }
