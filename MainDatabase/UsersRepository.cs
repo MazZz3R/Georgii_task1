@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NLog;
+using Microsoft.Extensions.Logging;
     
 namespace MainDatabase
 {
     public class UsersRepository : IRepository<User>
     {
-        private readonly NLog.Logger logger;
+        private readonly ILogger _logger;
         private ApplicationContext db;
 
         /// <summary>
@@ -13,10 +13,10 @@ namespace MainDatabase
         /// </summary>
         /// <param name="context">ApplicationContext for users table</param>
         /// <param name="logger">Logger</param>
-        public UsersRepository(ApplicationContext context, Logger logger)
+        public UsersRepository(ApplicationContext context, ILogger logger)
         {
-            this.logger = logger;
-            logger.Info("Creating UsersRepository");
+            _logger = logger;
+            _logger.LogInformation("Creating UsersRepository");
             db = context;
         }
 
@@ -26,7 +26,7 @@ namespace MainDatabase
         /// <returns>IEnumerable of all users</returns>
         public IEnumerable<User> GetList()
         {
-            logger.Info("Getting all users");
+            _logger.LogInformation("Getting all users");
             var users = (from user in db.Users.Include(p => p.followers).Include(p => p.following)
                             select user).ToList();
             return users;
@@ -42,7 +42,7 @@ namespace MainDatabase
         /// </exception>
         public User Get(int id)
         {
-            logger.Info($"Getting user with id {id}");
+            _logger.LogInformation($"Getting user with id {id}");
 
             try
             {
@@ -53,7 +53,7 @@ namespace MainDatabase
             }
             catch (System.InvalidOperationException)
             {
-                logger.Error($"User with id {id} not found");
+                _logger.LogError($"User with id {id} not found");
                 throw new System.InvalidOperationException($"User with id {id} not found");
             }
         }
@@ -64,7 +64,7 @@ namespace MainDatabase
         /// <param name="user">User to add to database</param>
         public void Create(User user)
         {
-            logger.Info($"Adding user {user.Name}");
+            _logger.LogInformation($"Adding user {user.Name}");
             db.Users.Add(user);
         }
 
@@ -77,14 +77,14 @@ namespace MainDatabase
         /// </exception>
         public void Update(User user)
         {
-            logger.Info($"Updating user with id {user.Id}");
+            _logger.LogInformation($"Updating user with id {user.Id}");
             try
             {
                 db.Users.Update(user);
             }
             catch (System.InvalidOperationException)
             {
-                logger.Error($"User with id {user.Id} not found");
+                _logger.LogError($"User with id {user.Id} not found");
                 throw new System.InvalidOperationException($"User with id {user.Id} not found");
             }
         }
@@ -100,7 +100,7 @@ namespace MainDatabase
         /// </exception>
         public void Delete(int id)
         {
-            logger.Info($"Deleting user with id {id}");
+            _logger.LogInformation($"Deleting user with id {id}");
             try
             {
                 var user_db = (from user in db.Users.Include(p => p.followers).Include(p => p.following)
@@ -110,7 +110,7 @@ namespace MainDatabase
             }
             catch (System.InvalidOperationException)
             {
-                logger.Error($"User with id {id} not found");
+                _logger.LogError($"User with id {id} not found");
                 throw new System.InvalidOperationException($"User with id {id} not found");
             }
         }
@@ -119,7 +119,7 @@ namespace MainDatabase
         /// </summary>
         public void Save()
         {
-            logger.Info("Saving changes");
+            _logger.LogInformation("Saving changes");
             db.SaveChanges();
         }
         private bool disposed = false;
@@ -146,7 +146,7 @@ namespace MainDatabase
         /// </summary>
         public void Dispose()
         {
-            logger.Info("Disposing UsersRepository");
+            _logger.LogInformation("Disposing UsersRepository");
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
@@ -162,7 +162,7 @@ namespace MainDatabase
         /// </param>
         public void Follow(User user, User follower)
         {
-            logger.Info($"User {user.Name} is now followed by {follower.Name}");
+            _logger.LogInformation($"User {user.Name} is now followed by {follower.Name}");
             user.followers.Add(follower);
         }
     }
