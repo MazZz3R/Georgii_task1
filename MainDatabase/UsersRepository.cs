@@ -63,7 +63,16 @@ namespace MainDatabase
         public void Create(User user)
         {
             _logger.LogInformation($"Adding user {user.Name}");
+            try
+            {
             db.Users.Add(user);
+        }
+            catch (System.InvalidOperationException)
+            {
+                _logger.LogError($"User with id {user.Id} already exists");
+                throw new System.InvalidOperationException($"User with id {user.Id} already exists");
+            }   
+
         }
 
         /// <summary>
