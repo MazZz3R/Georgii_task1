@@ -1,6 +1,6 @@
 ﻿namespace MainDatabase
 {
-    interface IRepository<T> : IDisposable
+    public interface IRepository<T> : IDisposable
         where T : class
     {
         /// <summary>
