@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-    
+
 namespace MainDatabase
 {
     public class UsersRepository : IRepository<User>
@@ -13,11 +13,19 @@ namespace MainDatabase
         /// </summary>
         /// <param name="context">ApplicationContext for users table</param>
         /// <param name="logger">Logger</param>
-        public UsersRepository(ApplicationContext context, ILogger logger)
+        public UsersRepository(ApplicationContext context, ILogger<UsersRepository> logger)
         {
             _logger = logger;
             _logger.LogInformation("Creating UsersRepository");
             db = context;
+        }
+        public UsersRepository(ILogger<UsersRepository> logger)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+
+            DbContextOptions<ApplicationContext> options = optionsBuilder.UseSqlite("Data Source=D:\\helloapp.db").Options;
+            db = new ApplicationContext(options);
+            _logger = logger;
         }
 
         /// <summary>
@@ -29,7 +37,7 @@ namespace MainDatabase
             _logger.LogInformation("Getting all users");
 
             var users = db.Users.Include(p => p.followers).Include(p => p.following);
-            
+
             return users;
         }
 
@@ -65,12 +73,12 @@ namespace MainDatabase
             _logger.LogInformation($"Adding user {user.Name}");
             try
             {
-            db.Users.Add(user);
-        }
+                db.Users.Add(new User { Name = user.Name, Email = user.Email, Age = user.Age, Password = user.Password });
+            }
             catch (System.InvalidOperationException)
             {
-                _logger.LogError($"User with id {user.Id} already exists");
-                throw new System.InvalidOperationException($"User with id {user.Id} already exists");
+                _logger.LogError($"User with Email {user.Email} already exists");
+                throw new System.InvalidOperationException($"User with Email {user.Email} already exists");
             }   
 
         }

@@ -22,14 +22,21 @@ namespace Georgii_task1
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
             DbContextOptions<ApplicationContext> options = optionsBuilder.UseSqlite(connectionString).Options;
 
-
             var context = new ApplicationContext(options);
             var usersRepository = new UsersRepository(context, logger);
 
-            usersRepository.Create(new User { Name = "Ben", Email = "ben2@email.ru", Age = 52, Password = "I KNOW IT SHOULD BE HASHED"});
-            usersRepository.Save();
+            //usersRepository.Create(new User { Name = "Ben", Email = "ben2@email.ru", Age = 52, Password = "I KNOW IT SHOULD BE HASHED"});
+            //usersRepository.Save();
 
-            usersRepository.GetList().ToList().ForEach(user => Console.WriteLine($"{user.Id}. {user.Name} - {user.Age}"));
+            var users = usersRepository.GetList().ToList();
+            foreach(var user in users)
+            {
+                Console.WriteLine($"{user.Id} {user.Name} {user.Email} {user.Age} {user.Password}");
+                foreach(var follower in user.followers)
+                {
+                    Console.WriteLine($"Follower: {follower.Name}");
+                }
+            }
             Console.Read();
         }
     }
